@@ -33,16 +33,74 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "filter image (beanstalk)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{EB_URL}}/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
+					"host": [
+						"{{EB_URL}}"
+					],
+					"path": [
+						"filteredimage"
+					],
+					"query": [
+						{
+							"key": "image_url",
+							"value": "https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
 		"type": "bearer"
 	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "80a5fc34-565c-4c38-ae3a-edae958751bd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bb89980e-e626-419c-ab69-ec94bfc54bc5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "88504f39-e1b7-4df4-a16f-a38af109ea47",
+			"id": "ea5043ac-3bfa-4faf-be05-c34d391b79d0",
 			"key": "host",
 			"value": "http://localhost:8082",
+			"type": "string"
+		},
+		{
+			"id": "a0b58b58-b76b-4bb1-8d39-75dbbc8bbb60",
+			"key": "EB_URL",
+			"value": "http://image-filter-dev222.us-east-2.elasticbeanstalk.com",
 			"type": "string"
 		}
 	],
