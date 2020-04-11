@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 import { config } from './config';
@@ -14,10 +14,12 @@ import { config } from './config';
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  app.get("/filteredimage", async(req, res) => {
+  app.get("/filteredimage", async(req : Request, res : Response) => {
     const imageUrl = req.query.image_url;
     const auth_token = req.get("auth_token");
 
+    console.log(`supplied token i ${auth_token}`);
+    console.log(`actual is ${config.auth.token}`);
     if (!imageUrl) {
      return res.status(400)
                 .send("image_url is a required query param")
@@ -27,7 +29,7 @@ import { config } from './config';
       return res.status(401)
                 .send("Unauthorised");
     }
-    const filteredImagePath = await filterImageFromURL(imageUrl);   
+    const filteredImagePath : string = await filterImageFromURL(imageUrl);   
     //check we have a valid response from previous step
     if (!filteredImagePath) {
       return res.status(500)
@@ -40,7 +42,7 @@ import { config } from './config';
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req : Request, res : Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
