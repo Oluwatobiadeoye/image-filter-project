@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
-import { config } from './config';
 
 (async () => {
 
@@ -16,18 +15,10 @@ import { config } from './config';
 
   app.get("/filteredimage", async(req : Request, res : Response) => {
     const imageUrl = req.query.image_url;
-    const auth_token = req.get("auth_token");
 
-    console.log(`supplied token i ${auth_token}`);
-    console.log(`actual is ${config.auth.token}`);
     if (!imageUrl) {
      return res.status(400)
                 .send("image_url is a required query param")
-    }
-    
-    if (auth_token !== config.auth.token) {
-      return res.status(401)
-                .send("Unauthorised");
     }
     const filteredImagePath : string = await filterImageFromURL(imageUrl);   
     //check we have a valid response from previous step
